@@ -40,6 +40,23 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+
+    steps {
+
+        sh '''
+        docker stop devops-app || true
+        docker rm devops-app || true
+
+        docker pull YOUR_DOCKERHUB_USERNAME/aws-devops-app:latest
+
+        docker run -d \
+        --name devops-app \
+        -p 8081:8080 \
+        YOUR_DOCKERHUB_USERNAME/aws-devops-app:latest
+        '''
+    }
+}
 
     }
 }
