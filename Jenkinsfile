@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/YOUR_USERNAME/aws-devops-project.git'
+                    url: 'https://github.com/Vedhawathy/aws-devops-project.git'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t YOUR_DOCKERHUB_USERNAME/aws-devops-app:latest .'
+                sh 'docker build -t vedhawathy/aws-devops-app:latest .'
             }
         }
 
@@ -35,7 +35,7 @@ pipeline {
 
                     sh '''
                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    docker push YOUR_DOCKERHUB_USERNAME/aws-devops-app:latest
+                    docker push vedhawathy/aws-devops-app:latest
                     '''
                 }
             }
@@ -48,12 +48,12 @@ pipeline {
         docker stop devops-app || true
         docker rm devops-app || true
 
-        docker pull YOUR_DOCKERHUB_USERNAME/aws-devops-app:latest
+        docker pull vedhawathy/aws-devops-app:latest
 
         docker run -d \
         --name devops-app \
         -p 8081:8080 \
-        YOUR_DOCKERHUB_USERNAME/aws-devops-app:latest
+        vedhawathy/aws-devops-app:latest
         '''
     }
 }
